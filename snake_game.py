@@ -25,10 +25,10 @@ BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
-SPEED = 11
+SPEED = 20
 
 
-class SnakeGame:
+class SnakeGameAI:
 
     def __init__(self, w=640, h=480):
         self.w = w
@@ -40,6 +40,7 @@ class SnakeGame:
         self.reset()
 
         # init game state
+    def reset(self):
         self.direction = Direction.RIGHT
 
         self.head = Point(self.w/2, self.h/2)
@@ -122,8 +123,9 @@ class SnakeGame:
         pygame.display.flip()
 
     def _move(self, action):
-        
-        clock_wise = [Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP]
+
+        clock_wise = [Direction.RIGHT, Direction.DOWN,
+                      Direction.LEFT, Direction.UP]
         idx = clock_wise.index(self.direction)
         if np.array_equal(action, [1, 0, 0]):
             new_dir = clock_wise[idx]
@@ -133,7 +135,7 @@ class SnakeGame:
         else:
             next_idx = (idx - 1) % 4
             new_dir = clock_wise[next_idx]
-            
+
         self.direction = new_dir
         x = self.head.x
         y = self.head.y
@@ -150,7 +152,7 @@ class SnakeGame:
 
 
 if __name__ == '__main__':
-    game = SnakeGame()
+    game = SnakeGameAI()
 
     # game loop
     while True:
